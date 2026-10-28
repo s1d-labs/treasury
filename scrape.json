@@ -1,13 +1,13 @@
 {
   "family": "treasury",
-  "about": "Example family: books.toscrape.com (a public site made for scraping practice). Copy this repo and change it.",
+  "about": "State treasury spending (department / DDO level). Phase 1: Uttar Pradesh Koshvani (koshvani.up.nic.in).",
   "setup": [
     "pip install -r requirements.txt"
   ],
   "tasks": {
-    "crawl": [
+    "koshvani": [
       "python",
-      "crawl.py"
+      "koshvani.py"
     ]
   }
 }

@@ -2,8 +2,16 @@ name: setup
 
 # Puts this family's projects in the pool and registers its health checks (setup_family.py). Run it by hand after changing
 # family.py. The hub trusts this repo (s1d-labs/<family>) through the GitHub OIDC token; no secrets are needed.
+# It also runs on the 5th of each month: the current financial year's figures grow monthly, and that run seeds the new
+# month's round (keys carry the month; past years' keys already exist and are kept).
 on:
   workflow_dispatch:
+    inputs:
+      limit:
+        description: "Seed only the first N items of each project (0 = all)"
+        default: "0"
+  schedule:
+    - cron: "30 3 5 * *"
 
 permissions:
   id-token: write
@@ -22,3 +30,4 @@ jobs:
       - run: python setup_family.py
         env:
           SCRAPE_HUB_URL: https://scrape.s1d.me
+          SEED_LIMIT: ${{ inputs.limit || '0' }}

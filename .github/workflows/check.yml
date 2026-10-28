@@ -1,7 +1,8 @@
 name: check
 
 # Verifies this family on every push: parsing tests on saved pages (pytest), then scrape-check, which runs setup_family.py and the
-# crawl task against a local stand-in for scrape-hub, the same way the pool runner does, on 2 real queue items (and a rerun).
+# koshvani task against a local stand-in for scrape-hub, the same way the pool runner does, on 2 real grant items (and a
+# rerun). The DDO project's items take ~10 minutes each, too long here; try one with: python koshvani.py --local ddo <fy> 08
 # Nothing reaches the real hub. Run it by hand too: Actions -> check -> Run workflow.
 on:
   push:
@@ -14,7 +15,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,7 +27,7 @@ jobs:
       - name: Parsing tests
         run: python -m pytest tests -q
       - name: scrape-check (local stand-in hub, 2 real items)
-        run: scrape-check --items 2
+        run: scrape-check --project treasury-up-grants --items 2 --timeout 1500
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:

@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="utf-8" /><link rel="icon" type="image/png" href="../assets/img/koshvaniIcon.png" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>
+	Koshvani web -- A Gateway to Finance Activities in the State of Uttar Pradesh
+</title><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><meta name="viewport" content="width=device-width" /><link rel="stylesheet" href="assets/css/jquery.tooltip.css" type="text/css" /><link rel="stylesheet" href="assets/css/accordion.min.css" type="text/css" />
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /><link href="assets/css/demo.css" rel="stylesheet" /><link href="assets/css/spinner.css" rel="stylesheet" />
+    
+    <!--     Fonts and icons     -->
+    
+    
+    
+
+
+
+    <style>
+        i.custom {
+            font-size: 2em;
+            color: purple;
+        }
+        i.custom2 {
+            font-size: 2em;
+            color: purple;
+            padding-right: 10px;
+        }
+        .smallButton {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+      </style>
+    
+    <script type="text/javascript">
+        var is_ie = /*@cc_on!@*/false || !!document.documentMode;;
+        if (is_ie) {
+            document.write('<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" type="text/css" />');
+            document.write('<link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel="stylesheet" type="text/css" />');
+        }
+        else {
+            document.write('<link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />');
+            document.write('<link href="assets/css/FontRoboto.css" rel="stylesheet" type="text/css" />');
+        }
+    </script>
+    <script type="text/javascript">
+      function ShowProgressBar() {
+          document.getElementById('coverScreen').style.visibility = 'visible';
+          document.getElementById('dvWrapper').style.visibility = "hidden";
+      }
+
+      function HideProgressBar() {
+	  document.getElementById('coverScreen').style.visibility = "hidden";
+          document.getElementById('dvWrapper').style.visibility = 'visible';
+      }
+
+function SiteMessage()
+{
+alert('Due to maintenance activity, service will not be available from 07-10-2022 08:00 PM to 10-10-2022 at 10:00 AM.');
+}
+    </script>
+    <style>
+        .LockOn {
+  display: block;
+  visibility: visible;
+  position: absolute;
+  z-index: 999;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color:white;
+  vertical-align:bottom;
+  padding-top: 20%;
+  filter: alpha(opacity=75);
+  opacity: 0.75;
+  font-size:large;
+  color:blue;
+  font-style:italic;
+  font-weight:400;
+  background-image: url("assets/img/loading.gif");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  }
+    </style>
+<link href="App_Themes/OliveStatic/material-dashboard-Olive.css" type="text/css" rel="stylesheet" /></head>
+
+<body onload="javascript:HideProgressBar()">    
+
+<form name="form1" method="post" action="./KoshvaniStatic.aspx" id="form1">
+<div>
+<input type="hidden" name="__CSRFTOKEN" id="__CSRFTOKEN" value="2af7bc70-b462-458c-b38f-fbc45aa16d26" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTI1MDcwNTEwNQ9kFgICAw9kFgJmDxAPFgYeDURhdGFUZXh0RmllbGQFB2ZpbnllYXIeDkRhdGFWYWx1ZUZpZWxkBQdmaW55ZWFyHgtfIURhdGFCb3VuZGdkEBUFCTIwMjYtMjAyNwkyMDI1LTIwMjYJMjAyNC0yMDI1CTIwMjMtMjAyNAkyMDIyLTIwMjMVBQkyMDI2LTIwMjcJMjAyNS0yMDI2CTIwMjQtMjAyNQkyMDIzLTIwMjQJMjAyMi0yMDIzFCsDBWdnZ2dnFgFmZGTYUmc/zaHxFQbAR8xdem16fR16SEYL1Trouo3tcfeyyg==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8A3D46F8" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAA3YK+K17NeVy/tW8V+smQ+EflOLMG69OZ7UCByJCA/oZXxiVweCmtaMNtcGD3H2nfOR4b3z/5VDq8iesNkfI1z3ylnkyrmQXQlfZD7enxZKn/gQeCDj4ii2Pu98kMMEyzj5FeXXeMexB4aFrV7Ew8DzVu+/3HW5OmQbOZowiZ6YPYHYb9Ojd3jb17n8dyThduCamE1ECeYBR4S/MgYA+DuITXT0nA1ofx4trUGfqAKYLzUf5YHl7moe+APhvbA9FfCFImDxekCzYysSSZK4f/8IrH2WSNSgJKqkPfhMwbsbg2rJ0tBgBYLEBKpUUOGJYFQ=" />
+</div>
+    <div id="coverScreen"  class="LockOn"></div>
+	<div class="main-panel" id="dvWrapper">
+            <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <table style="width:800px;">                        
+                            <tr>
+                                <td>
+                                    <div>
+				                        <a href="KoshDashboard.aspx" class="simple-text">                    
+                                        <span style="font-size:24px; font-weight:bold;">
+                                            <img src="images/UPGovLogo.png" style="height:70px; width:70px;" />
+                                            KOSH<span style="color:darkorange">VANI</span>&nbsp;&nbsp;
+                                            <span style="color:purple; font-size:small; font-family:'Lucida Calligraphy','Lucida Handwriting',sans-serif; text-align:center; vertical-align:middle; padding-top:25px; text-decoration:underline; font-weight:normal;">
+                                            Koshvani web -- A Gateway to Finance Activities in the State of Uttar Pradesh.
+                                            </span>
+                                        </span>
+				                        </a>
+			                        </div>
+                                </td>
+                            </tr>                        
+                            
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="color:white; font-weight:bold; border:1px solid transparent; border-radius:5px; background-color:purple; height:25px; vertical-align:middle; width:315px;">Financial Year : 2026-2027,&nbsp;&nbsp;Date : 28-Oct-2026</div>                                    
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                            </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <table class="nav navbar-nav navbar-right">
+                            <tr>
+                                <td style="text-align:right;">
+                                    <span>
+                                        <img src="assets/img/digital-india-and-make-in-india.png" height="100px" width="200px" />
+                                    
+                                    <img src="images/Emblem_of_India.png" style="height:80px; width:50px; margin-bottom:5px;" />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>                                
+                                    <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                &nbsp;&nbsp;
+                                <span style="padding-left:10px;"><b>Financial Year : </b><select name="ddlFinYear" onchange="javascript:ShowProgressBar();setTimeout(&#39;__doPostBack(\&#39;ddlFinYear\&#39;,\&#39;\&#39;)&#39;, 0)" id="ddlFinYear">
+	<option selected="selected" value="2026-2027">2026-2027</option>
+	<option value="2025-2026">2025-2026</option>
+	<option value="2024-2025">2024-2025</option>
+	<option value="2023-2024">2023-2024</option>
+	<option value="2022-2023">2022-2023</option>
+
+</select></span>
+                            </li>
+                            <li>								
+							</li>
+							<li>
+                                &nbsp;&nbsp;
+								<input type="submit" name="btnGray" value="" id="btnGray" style="background-color:Gray;height:25px;width:25px;border: none; border-radius: 3px;" />
+							</li>
+							<li>								
+							</li>
+							<li>
+                                &nbsp;&nbsp;
+								<input type="submit" name="btnBlue" value="" id="btnBlue" style="background-color:CornflowerBlue;height:25px;width:25px;border: none; border-radius: 3px;" />
+							</li>
+							<li>								
+							</li>
+							<li>
+                                &nbsp;&nbsp;
+								<input type="submit" name="btnOlive" value="" id="btnOlive" style="background-color:Olive;height:25px;width:25px;border: none; border-radius: 3px;" />
+							</li>
+							<li>								
+							</li>
+							<li>
+                                &nbsp;&nbsp;
+								<input type="submit" name="btnXSmall" value="-A" onclick="document.body.style.fontSize=&#39;x-small&#39;; return false;" id="btnXSmall" class="smallButton" style="background-color:#FFFFCC;font-weight:bold;height:25px;width:25px;border: none; border-radius: 3px;" />
+							</li>
+							<li>								
+							</li>
+							<li>
+                                &nbsp;&nbsp;
+								<input type="submit" name="btnSmall" value="A" onclick="document.body.style.fontSize=&#39;small&#39;; return false;" id="btnSmall" class="smallButton" style="background-color:#FFFFCC;font-weight:bold;height:25px;width:25px;border: none; border-radius: 3px;" />
+							</li>
+							<li>								
+							</li>
+							<li>
+                                &nbsp;&nbsp;
+								<input type="submit" name="btnLarge" value="A+" onclick="document.body.style.fontSize=&#39;large&#39;; return false;" id="btnLarge" class="smallButton" style="background-color:#FFFFCC;font-weight:bold;height:25px;width:25px;border: none; border-radius: 3px;" />
+							</li>
+							<li>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</li>
+						</ul>                            
+                                </td>
+                            </tr>                            
+                        </table>
+                        </div>
+                </div>
+			
+			<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+			    <span style="float:right"><a href="UserSection/DashboardLogin.aspx">Login</a>&nbsp;</span>
+                        </div>                        
+                    </div>
+
+					<div class="row">
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="orange">
+									<i class="material-icons">center_focus_strong</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Expenditure</p><br /><br />
+									 <ul style="text-align:left;">
+                                         <li><a href="KoshReports/ExpGrant.aspx">Grant-wise expenditure</a></li>
+                                         <li><a href="KoshReports/ExpGrantRevCap.aspx">Grant-wise (Revenue/Capital) expenditure</a></li>
+                                         <li><a href="KoshReports/GrntBud.aspx">Grant & Major Head-wise expenditure</a></li>
+                                         <li><a href="KoshReports/GrantObj.aspx">Grant & Object Wise expenditure</a></li>
+                                         <li><a href="KoshReports/NonPlanExp.aspx">Budgetary scheme expenditure</a></li>
+                                         <li><a href="KoshReports/DDOExp.aspx">DDO-wise expenditure</a></li>
+                                         <li><a href="KoshReports/DivExp.aspx">Division-wise expenditure</a></li>
+                                         <li><a href="KoshReports/PayBudCtrlStmt.aspx">Payment Budget Control Statement (Output-10)</a></li>
+                                         <li><a href="KoshReports/BudProvision.aspx">Department wise Expenditure</a></li>
+                                         <li><a href="KoshReports/PFMSCentralSchemeWise.aspx">Centrally Sponsored Schemes Detail</a></li>
+									 </ul>
+								</div>
+							</div>
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="red">
+									<i class="material-icons">spa</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Remittance and PLA</p><br /><br />
+									    <ul style="text-align:left;">
+                                            <li><a href="KoshReports/CCLExp.aspx">Cash Credit Limits (CCL)</a></li>
+                                            <li><a href="KoshReports/DCLExp.aspx">Deposit Credit Limits (DCL)</a></li>
+                                            <li><a href="KoshReports/PLAExp.aspx">PLA and other deposits</a></li>
+                                            <li><a href="KoshReports/EDUExp.aspx">Education GPF</a></li>
+									    </ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="green">
+									<i class="material-icons">content_copy</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Receipts</p><br /><br />
+									   <ul style="text-align:left;">
+                                           <li><a href="KoshReports/RecBudCtrlStmt.aspx">Receipt Budget Control Statement (Output-9)</a></li>
+                                           <li><a href="KoshReports/RecTargetWise.aspx">Target-wise Receipt</a></li>
+                                           <li><a href="KoshReports/RcpMain.aspx">Receipt upto Challan</a></li>
+                                           <li><a href="KoshReports/ComRcpMain.aspx">Division-wise receipt</a></li>
+                                           <li><a href="KoshReports/TTRcpMain.aspx">Commercial Tax Receipt</a></li>
+									   </ul>
+								</div>
+							</div>
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="orange">
+									<i class="material-icons">streetview</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Pensioner's Corner</p><br /><br />
+									    <ul style="text-align:left;">
+                                            <li><a href="KoshReports/PensionInd.aspx">Pension Payment Details</a></li>
+                                            <li><a href="KoshReports/PensionCat.aspx">Category wise pensioner</a></li>
+                                            <li><a href="KoshReports/PensionTre.aspx">Treasury/Category-wise pensioner</a></li>
+                                            <li><a href="KoshReports/PensionAge.aspx">Age-wise pensioners</a></li>
+									    </ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="blue">
+									<i class="material-icons">view_column</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Useful Reports</p><br /><br />
+									    <ul style="text-align:left;">
+                                            <li><a href="KoshReports/BM4Detail.aspx">B.M.-4: Statement of Monthly Expenditure</a></li>
+                                            <li><a href="KoshReports/BM8DeptList.aspx">B.M.-8 : Monthly Expenditure Statement</a></li>
+                                            <li><a href="KoshReports/ReappList.aspx">B.M.-9 (Part - I) & (Part - II) Grant Wise</a></li>
+                                            <li><a href="KoshReports/ExcMore.aspx">Expenditure exceeds allotment</a></li>
+                                            <li><a href="KoshReports/ExcNoExp.aspx">Expenses not committed</a></li>
+                                            <li><a href="KoshReports/ExpObjRevCap.aspx">Object-wise Expenditure (Revenue/Capital)</a></li>
+                                            <li><a href="KoshReports/OthRepObj.aspx">Expenses on all treasuries object-wise</a></li>
+                                            <li><a href="KoshReports/OthRepTre.aspx">Expenses on all objects treasury-wise</a></li>
+                                            <li><a href="KoshReports/ConExp.aspx">Payments made through contingency fund</a></li>
+                                            <li><a href="KoshReports/Tr27Exp.aspx">Payments made through TR-27</a></li>
+                                            <li><a href="KoshReports/RBDSt.aspx">RBD Statement</a></li>
+                                            <li><a href="KoshReports/BudSchUC.aspx">Search Important Schemes<img src="images/new.gif" style="width:30px; height:15px;" /></a></li>
+									    </ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="red">
+									<i class="material-icons">select_all</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Data Transmission Status</p><br /><br />
+									 <ul style="text-align:left;">
+                                         <li><a href="KoshReports/DailyTrx.aspx">Daily Data Statistics</a></li>
+                                         <li><a href="KoshReports/DataStat.aspx">Monthly Data Statistics</a></li>
+                                         <li><a href="KoshReports/AllotmentStatus.aspx">Allotment Data Statistics</a></li>
+									 </ul>
+								</div>
+							</div>
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="green">
+									<i class="material-icons">sort</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Graphical Analysis</p><br /><br />
+									   <ul style="text-align:left;">
+                                           <li><a href="KoshReports/RChart.aspx">Tax and Non-Tax revenue</a></li>
+                                           <li><a href="KoshReports/RChartHeads.aspx">Major Receipt Heads</a></li>
+									   </ul>
+								</div>
+							</div>
+							<div class="card card-stats">
+								<div class="card-header" data-background-color="blue">
+									<i class="material-icons">person_add</i>
+								</div>
+								<div class="card-content">
+									<p class="category">Features</p><br /><br />
+									   <ul style="text-align:left;">
+                                           <li><a href="KoshReports/EmpSalDetail.aspx">Employee Salary Detail</a></li>
+					   <li><a href="KoshReports/gpf.aspx">Download GPF Authority</a></li>
+                                           <li><a href="KoshReports/EmpHeadWise.aspx">U.P.State Employee Data</a></li>
+                                           <li><a href="assets/pdf/FSD_RTI.pdf">Financial Statistics Directorate U.P. (RTI-Information u/s 4(1)(b))</a></li>
+                                           <li><a href="assets/pdf/FSD Janhit gaurantee adhiniyam.pdf">Financial Statistics Directorate U.P. (Janhit Gaurantee Adhiniyam)</a></li>
+									   </ul>
+								</div>
+							</div>
+						</div>
+					</div>
+			<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+			    
+                        </div>                        
+                    	</div>
+			<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <hr />
+                    <center>
+					<p class="copyright" title="S4">
+                        ©2017 Designed, Developed and hosted by <a href="http://home.nic.in/" target="_blank" style="color: #006699;">National Informatics Centre</a>
+                        <br style="display: block; margin: 0px 0; line-height:0px;" />
+						For any queries mail at - <a href="#" style="color:#006699; font-size: small;">fsd[at]nic[dot]in</a>, Phone - No. 0522-2286626 <br/>S4
+					</p>
+                    </center>
+				</div>
+			</div>
+		</div>
+</form>
+</body>
+    
+
+    <script src="assets/js/accordion.min.js"></script>	
+
+    <script>
+	    var accordion = new Accordion('.accordion-container');	
+    </script>
+    <!--   Core JS Files   -->
+	<script src="assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="assets/js/material.min.js" type="text/javascript"></script>
+
+    
+    
+
+	<!--  Charts Plugin -->
+	<script src="assets/js/chartist.min.js"></script>
+
+	<!--  Notifications Plugin    -->
+	<script src="assets/js/bootstrap-notify.js"></script>
+
+    <script type="text/javascript">
+        var searchVisible = 0;
+        var transparent = true;
+
+        var transparentDemo = true;
+        var fixedTop = false;
+
+        var mobile_menu_visible = 0,
+        mobile_menu_initialized = false,
+        toggle_initialized = false,
+        bootstrap_nav_initialized = false;
+
+        var seq = 0, delays = 80, durations = 500;
+        var seq2 = 0, delays2 = 80, durations2 = 500;
+        $j = jQuery.noConflict();
+
+
+        $j(document).ready(function () {
+            $jsidebar = $j('.sidebar');
+
+            $j.material.init();
+
+            md.initSidebarsCheck();
+
+            window_width = $j(window).width();
+
+            // check if there is an image set for the sidebar's background
+            md.checkSidebarImage();
+
+            //  Activate the tooltips
+            $j('[rel="tooltip"]').tooltip();
+
+
+            $j('.form-control').on("focus", function () {
+                $j(this).parent('.input-group').addClass("input-group-focus");
+            }).on("blur", function () {
+                $j(this).parent(".input-group").removeClass("input-group-focus");
+            });
+
+        });
+
+// activate collapse right menu when the windows is resized
+        $j(window).resize(function () {
+            md.initSidebarsCheck();
+
+            // reset the seq for charts drawing animations
+            seq = seq2 = 0;
+
+        });
+
+md = {
+    misc:{
+        navbar_menu_visible: 0,
+        active_collapse: true,
+        disabled_collapse_init: 0,
+    },
+
+    checkSidebarImage: function(){
+        $jsidebar = $j('.sidebar');
+        image_src = $jsidebar.data('image');
+
+        if(image_src !== undefined){
+            sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>'
+            $jsidebar.append(sidebar_container);
+        }
+    },
+
+    initSidebarsCheck: function(){
+        if ($j(window).width() <= 991) {
+            if ($jsidebar.length != 0) {
+                md.initRightMenu();
+
+            } else {
+                md.initBootstrapNavbarMenu();
+            }
+        }
+
+    },
+
+    checkScrollForTransparentNavbar: debounce(function() {
+        if ($j(document).scrollTop() > 260) {
+                if(transparent) {
+                    transparent = false;
+                    $j('.navbar-color-on-scroll').removeClass('navbar-transparent');
+                }
+            } else {
+                if( !transparent ) {
+                    transparent = true;
+                    $j('.navbar-color-on-scroll').addClass('navbar-transparent');
+                }
+            }
+    }, 17),
+
+
+    initRightMenu: debounce(function(){
+        $jsidebar_wrapper = $j('.sidebar-wrapper');
+
+        if(!mobile_menu_initialized){
+            $jnavbar = $j('nav').find('.navbar-collapse').first().clone(true);
+
+            nav_content = '';
+            mobile_menu_content = '';
+
+            $jnavbar.children('ul').each(function () {
+
+                content_buff = $j(this).html();
+                nav_content = nav_content + content_buff;
+            });
+
+            nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
+
+            $jnavbar_form = $j('nav').find('.navbar-form').clone(true);
+
+            $jsidebar_nav = $jsidebar_wrapper.find(' > .nav');
+
+            // insert the navbar form before the sidebar list
+            $jnav_content = $j(nav_content);
+            $jnav_content.insertBefore($jsidebar_nav);
+            $jnavbar_form.insertBefore($jnav_content);
+
+            $j(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (event) {
+                event.stopPropagation();
+
+            });
+
+            mobile_menu_initialized = true;
+        } else {
+            if ($j(window).width() > 991) {
+                // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+                $jsidebar_wrapper.find('.navbar-form').remove();
+                $jsidebar_wrapper.find('.nav-mobile-menu').remove();
+
+                mobile_menu_initialized = false;
+            }
+        }
+
+        if(!toggle_initialized){
+            $jtoggle = $j('.navbar-toggle');
+
+            $jtoggle.click(function () {
+
+                if(mobile_menu_visible == 1) {
+                    $j('html').removeClass('nav-open');
+
+                    $j('.close-layer').remove();
+                    setTimeout(function(){
+                        $jtoggle.removeClass('toggled');
+                    }, 400);
+
+                    mobile_menu_visible = 0;
+                } else {
+                    setTimeout(function(){
+                        $jtoggle.addClass('toggled');
+                    }, 430);
+
+
+                    main_panel_height = $j('.main-panel')[0].scrollHeight;
+                    $jlayer = $j('<div class="close-layer"></div>');
+                    $jlayer.css('height', main_panel_height + 'px');
+                    $jlayer.appendTo(".main-panel");
+
+                    setTimeout(function(){
+                        $jlayer.addClass('visible');
+                    }, 100);
+
+                    $jlayer.click(function () {
+                        $j('html').removeClass('nav-open');
+                        mobile_menu_visible = 0;
+
+                        $jlayer.removeClass('visible');
+
+                         setTimeout(function(){
+                             $jlayer.remove();
+                             $jtoggle.removeClass('toggled');
+
+                         }, 400);
+                    });
+
+                    $j('html').addClass('nav-open');
+                    mobile_menu_visible = 1;
+
+                }
+            });
+
+            toggle_initialized = true;
+        }
+    }, 500),
+
+
+    initBootstrapNavbarMenu: debounce(function(){
+
+        if(!bootstrap_nav_initialized){
+            $navbar = $j('nav').find('.navbar-collapse').first().clone(true);
+
+            nav_content = '';
+            mobile_menu_content = '';
+
+            //add the content from the regular header to the mobile menu
+            $jnavbar.children('ul').each(function () {
+                content_buff = $j(this).html();
+                nav_content = nav_content + content_buff;
+            });
+
+            nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
+
+            $jnavbar.html(nav_content);
+            $jnavbar.addClass('off-canvas-sidebar');
+
+            // append it to the body, so it will come from the right side of the screen
+            $j('body').append($navbar);
+
+            $jtoggle = $j('.navbar-toggle');
+
+            $jnavbar.find('a').removeClass('btn btn-round btn-default');
+            $jnavbar.find('button').removeClass('btn-round btn-fill btn-info btn-primary btn-success btn-danger btn-warning btn-neutral');
+            $jnavbar.find('button').addClass('btn-simple btn-block');
+
+            $jtoggle.click(function () {
+                if(mobile_menu_visible == 1) {
+                    $j('html').removeClass('nav-open');
+
+                    $j('.close-layer').remove();
+                    setTimeout(function(){
+                        $jtoggle.removeClass('toggled');
+                    }, 400);
+
+                    mobile_menu_visible = 0;
+                } else {
+                    setTimeout(function(){
+                        $jtoggle.addClass('toggled');
+                    }, 430);
+
+                    $jlayer = $j('<div class="close-layer"></div>');
+                    $jlayer.appendTo(".wrapper-full-page");
+
+                    setTimeout(function(){
+                        $jlayer.addClass('visible');
+                    }, 100);
+
+
+                    $jlayer.click(function () {
+                        $j('html').removeClass('nav-open');
+                        mobile_menu_visible = 0;
+
+                        $jlayer.removeClass('visible');
+
+                         setTimeout(function(){
+                             $jlayer.remove();
+                             $jtoggle.removeClass('toggled');
+
+                         }, 400);
+                    });
+
+                    $j('html').addClass('nav-open');
+                    mobile_menu_visible = 1;
+
+                }
+
+            });
+            bootstrap_nav_initialized = true;
+        }
+    }, 500),
+
+    startAnimationForLineChart: function(chart){
+
+        chart.on('draw', function(data) {
+          if(data.type === 'line' || data.type === 'area') {
+            data.element.animate({
+              d: {
+                begin: 600,
+                dur: 700,
+                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                to: data.path.clone().stringify(),
+                easing: Chartist.Svg.Easing.easeOutQuint
+              }
+            });
+          } else if(data.type === 'point') {
+                seq++;
+                data.element.animate({
+                  opacity: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: 0,
+                    to: 1,
+                    easing: 'ease'
+                  }
+                });
+            }
+        });
+
+        seq = 0;
+    },
+    startAnimationForBarChart: function(chart){
+
+        chart.on('draw', function(data) {
+          if(data.type === 'bar'){
+              seq2++;
+              data.element.animate({
+                opacity: {
+                  begin: seq2 * delays2,
+                  dur: durations2,
+                  from: 0,
+                  to: 1,
+                  easing: 'ease'
+                }
+              });
+          }
+        });
+
+        seq2 = 0;
+    }
+}
+
+
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		clearTimeout(timeout);
+		timeout = setTimeout(function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		}, wait);
+		if (immediate && !timeout) func.apply(context, args);
+	};
+};
+
+    </script>
+
+	<script src="assets/js/highcharts.js"></script>
+    <script src="assets/js/modules/exporting.js"></script>	
+    <!--<script src="js/mib-banner.js"></script>-->
+</html>
