@@ -53,7 +53,7 @@ PROJECTS = [
         "title": "UP Koshvani: grant -> scheme -> treasury spending",
         "task": "koshvani",
         "target": KOSHVANI,
-        "env": {"SITE": f"https://{KOSHVANI}"},
+        "env": {"SITE": f"https://{KOSHVANI}", "ITEM_MINUTES": "25"},   # a long item (avg 3 min, longest seen 21)
         "probe": None,
         "max_workers": 2,                        # one session per worker on a slow, stateful site
         "unit_label": "grant-year", "record_label": "row",
@@ -65,7 +65,7 @@ PROJECTS = [
         "title": "UP Koshvani: treasury -> DDO -> grant -> scheme spending",
         "task": "koshvani",
         "target": KOSHVANI,
-        "env": {"SITE": f"https://{KOSHVANI}"},
+        "env": {"SITE": f"https://{KOSHVANI}", "ITEM_MINUTES": "50"},   # a long item (avg 11 min, longest seen 45)
         "probe": None,
         "max_workers": 2,
         "unit_label": "treasury-year", "record_label": "row",

@@ -31,8 +31,11 @@ Notes:
   every DDO checked. A treasury's own total (`t:`) is larger than the sum of its DDO totals (by about 10% at AGRA, 2026-27), so
   take each level as the site reports it rather than adding levels up.
 - The DDO row `--` (spending without a DDO code) is stored at treasury level but can't be opened on the site.
-- A drill the site keeps refusing is skipped, listed under the run's failures (`drill`, `<item> > <path>`) and counted as
-  `drill_skipped`; the rest of the item is stored.
+- A drill the site keeps refusing (it does so for a few `PAC--` rows and schemes whose names contain quotes) gets one replay in a
+  new session, then it is skipped, listed under the run's failures (`drill`, `<item> > <path>`) and counted as `drill_skipped`;
+  the rest of the item is stored.
+- A worker stops claiming items when less time is left in its budget than a long item takes (`ITEM_MINUTES` in the project's
+  env, or 1.2 × the longest item it has done; at most a quarter of the budget): items cut off by the time limit lose their work.
 - Voucher-level pages (voucher no., date, DDO, gross / deduction / net; no payee names) exist under both paths. They are not scraped
   yet: probably hundreds of thousands of pages.
 

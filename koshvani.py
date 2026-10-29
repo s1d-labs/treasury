@@ -28,7 +28,9 @@ from requests.adapters import HTTPAdapter
 
 PROJECT = os.environ.get("SCRAPE_POOL_PROJECT", "")
 SITE = os.environ.get("SITE", "https://koshvani.up.nic.in")
-DEADLINE = time.time() + float(os.environ.get("SCRAPE_MAX_HOURS", "1")) * 3600 - 120
+BUDGET_S = float(os.environ.get("SCRAPE_MAX_HOURS", "1")) * 3600
+DEADLINE = time.time() + BUDGET_S - 120
+ITEM_MINUTES = float(os.environ.get("ITEM_MINUTES", "25"))     # a long item of this project; set per project in family.py
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36 (s1d-labs treasury)"
 MONTHS = {m: i for i, m in enumerate(["January", "February", "March", "April", "May", "June", "July", "August", "September",
                                       "October", "November", "December"], 1)}
@@ -337,12 +339,13 @@ class Koshvani:
             url, soup = self.fetch(urljoin(url, soup.find("form").get("action") or "KoshvaniStatic.aspx"), url, data=form, label="main fy")
         self.main_url, self.main = url, soup
 
-    def open(self, steps):
+    def open(self, steps, attempts=4, pause=10):
         """steps = [report page, link text, link text, ...]. Returns the soup of the last page. Follows links from the deepest
-        page already open that shares the path (the site allows that), and replays the whole path in a new session on a bounce.
-        None when the site says there is no data for that selection, or gives an empty page for it twice (fresh session too)."""
+        page already open that shares the path (the site allows that), and replays the whole path in a new session on a bounce
+        (waiting pause, 2 x pause, ... up to 60 s). None when the site says there is no data for that selection, or gives an
+        empty page for it twice (fresh session too)."""
         empty = 0
-        for attempt in range(4):
+        for attempt in range(attempts):
             try:
                 if self.session is None:
                     self.start()
@@ -382,15 +385,16 @@ class Koshvani:
             except Bounce:
                 self.hub.metric("session_bounce")
                 self.session = None
-                time.sleep(min(60, 10 * 2 ** attempt))
+                time.sleep(min(60, pause * 2 ** attempt))
         raise SiteError(f"session kept dropping at {' > '.join(steps)}")
 
 
     def drill(self, steps):
-        """open() for a leaf of an item: a leaf the site keeps refusing is noted in self.skipped and the item goes on
-        (re-trying a whole item for one bad row would never end). Three failures in a row mean the site is down: SiteError."""
+        """open() for a leaf of an item: one replay in a new session, then the leaf is noted in self.skipped and the item goes on
+        (the site refuses some rows every time; re-trying a whole item for one bad row would never end). Three failures in a
+        row mean the site is down: SiteError."""
         try:
-            soup = self.open(steps)
+            soup = self.open(steps, attempts=2, pause=5)
         except SiteError as e:
             self.failed_in_row += 1
             self.skipped.append((" > ".join(steps[1:]), str(e)))
@@ -508,8 +512,11 @@ def main():
     from scrape_hub_client import HubClient      # imported here so --local works without it
     hub = HubClient(PROJECT, job_index=int(os.environ.get("SCRAPE_JOB_INDEX", "0")), total_jobs=int(os.environ.get("SCRAPE_TOTAL_JOBS", "1")))
     down = 0                                            # items in a row the site did not answer for
+    longest = 0.0                                       # seconds, the longest item this run has done
     try:
-        while time.time() < DEADLINE and down < 2:
+        # claim only while a long item still fits: work cut off by the time budget is lost (capped at a quarter of the budget,
+        # so short runs, like scrape-check's, still do some)
+        while time.time() < DEADLINE - min(max(ITEM_MINUTES * 60, 1.2 * longest), BUDGET_S / 4) and down < 2:
             if hub.settings.get("paused"):
                 time.sleep(30)                          # the hub holds us (the family owner paused it, or back-off)
                 continue
@@ -517,7 +524,7 @@ def main():
             if not items:
                 break                                   # nothing left for this project: exit, the worker asks the hub for more
             item = items[0]
-            pages = []
+            pages, started = [], time.time()
             try:
                 info, rows, skipped = run_item(hub, item["payload"], keep=pages)
             except TimeUp:
@@ -529,6 +536,7 @@ def main():
                 hub.complete([item["key"]], "failed", error=f"{type(e).__name__}: {e}"[:200])
                 continue
             down = 0
+            longest = max(longest, time.time() - started)
             if pages:
                 body = "".join(json.dumps(p, ensure_ascii=False) + "\n" for p in pages).encode()
                 hub.upload_many([(archive_path(item["key"]), gzip.compress(body), "application/gzip")])
