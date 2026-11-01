@@ -13,5 +13,6 @@ for p in PROJECTS:
     items = p["items"][:limit] if limit else p["items"]
     register_project(p["name"], title=p["title"], unit_label=p["unit_label"], record_label=p["record_label"],
                      expected_units=len(p["items"]), expected_records=sum(i["payload"].get("expected", 0) for i in p["items"]))
-    set_pool(p["name"], FAMILY, p["task"], target=p["target"], env=p["env"], probe=p["probe"], max_workers=p.get("max_workers"))
+    set_pool(p["name"], FAMILY, p["task"], target=p["target"], env=p["env"], probe=p["probe"], max_workers=p.get("max_workers"),
+             proxy=p.get("proxy"))
     print(p["name"], f"queue ({len(items)} of {len(p['items'])} items):", seed_queue(p["name"], items))

@@ -1,6 +1,6 @@
-"""What this family scrapes. Phase 1: Uttar Pradesh, Koshvani (https://koshvani.up.nic.in), the one state treasury portal that
-answers GitHub-hosted runners. Maharashtra BEAMS, Rajasthan IFMS, Bihar CTMIS and Karnataka Khajane-II drop connections from
-outside India; they wait for an Indian vantage point (see README).
+"""What this family scrapes. Uttar Pradesh, Koshvani (https://koshvani.up.nic.in), answers GitHub-hosted runners directly.
+Maharashtra, BEAMS (https://beams.mahakosh.gov.in), answers only from India: its projects run with proxy="IN" (one of the hub's
+Mumbai proxies per worker). Rajasthan IFMS is next; Bihar CTMIS and Karnataka's treasury host don't answer even from India (README).
 
 FAMILY must equal the repo name (s1d-labs/<FAMILY>). Each project is one queue of work on one site; `target` is the host it hits.
 """
@@ -10,6 +10,7 @@ from pathlib import Path
 
 FAMILY = json.loads((Path(__file__).parent / "scrape.json").read_text())["family"]
 KOSHVANI = "koshvani.up.nic.in"
+BEAMS = "beams.mahakosh.gov.in"
 
 
 def financial_years(today=None, n=5):
@@ -47,6 +48,35 @@ TREASURIES = ["08-AGRA", "06-ALIGARH", "10-ETAH", "68-FIROZABAD", "78-HATHRAS", 
               "63-PAO,NEW DELHI", "21-FATEHPUR", "82-KAUSHAMBI", "53-PRATAPGARH", "64-PRAYAGRAJ-CIV", "22-PRAYAGRAJ-COLL",
               "03-MUZAFFARNAGAR", "02-SAHARANPUR", "91-SHAMLI", "77-CHANDAULI", "30-GHAZIPUR", "29-JAUNPUR", "27-VARANASI"]
 
+def mh_month0(fy, today=None):
+    """BEAMS department reports run up to a chosen month (0-based). A past year: March (2), the full year. The current year: the
+    last complete month (October = 9 when seeded in November); in April, April itself."""
+    today = today or datetime.date.today()
+    if fy != financial_years(today)[0]:
+        return 2
+    return 3 if today.month == 4 else (today.month - 2) % 12
+
+
+def mh_asof(fy, today=None):
+    """BEAMS DDO reports show the current month and April-to-date as of the day they are read: None for a past (final) year, the
+    scrape month 'YYYY-MM' for the current one (record ids carry it, so each month's snapshot is kept)."""
+    today = today or datetime.date.today()
+    return today.strftime("%Y-%m") if fy == financial_years(today)[0] else None
+
+
+# BEAMS department codes (Department-wise expenditure, FY 2026-2027). A code missing in some year just produces no records.
+MH_DEPTS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+            "Y", "ZA", "ZC", "ZD", "ZE", "ZF", "ZG", "ZH", "ZI"]
+
+# BEAMS districts (code, name) of the district-wise DDO report; P.A.O. is the Mumbai Pay and Accounts Office.
+MH_DISTRICTS = [("54", "AHILYANAGAR"), ("62", "AKOLA"), ("61", "AMRAVATI"), ("33", "BEED"), ("47", "BHANDARA"), ("63", "BULDHANA"),
+                ("48", "CHANDRAPUR"), ("31", "CHHATRAPATI SAMBHAJINAGAR"), ("81", "Cyber Treasury"), ("35", "DHARASHIV"),
+                ("52", "DHULE"), ("49", "GADCHIROLI"), ("44", "GONDIA"), ("38", "HINGOLI"), ("53", "JALGAON"), ("36", "JALNA"),
+                ("26", "KOLHAPUR"), ("37", "LATUR"), ("46", "NAGPUR"), ("34", "NANDED"), ("55", "NANDURBAR"), ("51", "NASHIK"),
+                ("71", "P.A.O."), ("16", "PALGHAR"), ("32", "PARBHANI"), ("22", "PUNE"), ("13", "RAIGAD"), ("14", "RATNAGIRI"),
+                ("24", "SANGLI"), ("23", "SATARA"), ("15", "SINDHUDURG"), ("25", "SOLAPUR"), ("12", "THANE"), ("45", "WARDHA"),
+                ("65", "WASHIM"), ("64", "YAVATMAL")]
+
 PROJECTS = [
     {
         "name": f"{FAMILY}-up-grants",
@@ -72,9 +102,35 @@ PROJECTS = [
         "items": [{"key": key(fy, f"treasury-{t.split('-')[0]}"), "payload": {"report": "ddo", "fy": fy, "treasury": t.split("-")[0], "name": t.split("-", 1)[1]}}
                   for fy in FYS for t in TREASURIES],
     },
+    {
+        "name": f"{FAMILY}-mh-dept",
+        "title": "Maharashtra BEAMS: department -> demand -> major head -> scheme -> detail head",
+        "task": "beams",
+        "target": BEAMS,
+        "env": {"SITE": f"https://{BEAMS}", "ITEM_MINUTES": "40"},
+        "probe": None,
+        "proxy": "IN",                           # BEAMS answers only from India
+        "max_workers": 2,                        # the family borrows at most 4 proxies; 2 per MH project
+        "unit_label": "department-year", "record_label": "row",
+        "items": [{"key": key(fy, f"dept-{d}"), "payload": {"report": "dept", "fy": fy, "dept": d, "month0": mh_month0(fy)}}
+                  for fy in FYS for d in MH_DEPTS],
+    },
+    {
+        "name": f"{FAMILY}-mh-ddo",
+        "title": "Maharashtra BEAMS: district -> treasury -> DDO received and spent",
+        "task": "beams",
+        "target": BEAMS,
+        "env": {"SITE": f"https://{BEAMS}", "ITEM_MINUTES": "10"},
+        "probe": None,
+        "proxy": "IN",
+        "max_workers": 2,
+        "unit_label": "district-year", "record_label": "row",
+        "items": [{"key": key(fy, f"district-{c}"), "payload": {"report": "ddo", "fy": fy, "district": c, "name": n, "asof": mh_asof(fy)}}
+                  for fy in FYS for c, n in MH_DISTRICTS],
+    },
 ]
 
 # Health checks the hub runs every minute (work holds while one fails). None here on purpose: the hub checks from the team
-# server, whose address Koshvani drops, so a Koshvani probe would always fail and hold all work. The task itself fails items
+# server, whose address Koshvani drops and which BEAMS (India only) never answers, so a probe would always fail and hold all work. The task itself fails items
 # (and they are retried) when the site does not answer.
 PROBES = []

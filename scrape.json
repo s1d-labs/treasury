@@ -1,6 +1,6 @@
 {
   "family": "treasury",
-  "about": "State treasury spending (department / DDO level). Phase 1: Uttar Pradesh Koshvani (koshvani.up.nic.in).",
+  "about": "State treasury spending (department / DDO level). Uttar Pradesh Koshvani (koshvani.up.nic.in), Maharashtra BEAMS (beams.mahakosh.gov.in, through Indian proxies).",
   "setup": [
     "pip install -r requirements.txt"
   ],
@@ -8,6 +8,10 @@
     "koshvani": [
       "python",
       "koshvani.py"
+    ],
+    "beams": [
+      "python",
+      "beams.py"
     ]
   }
 }

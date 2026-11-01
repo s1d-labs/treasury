@@ -2,8 +2,9 @@
 
 State treasury spending at department and DDO (drawing and disbursing officer) level, scraped for the s1d-labs pool.
 
-**Phase 1: Uttar Pradesh, [Koshvani](https://koshvani.up.nic.in).** This is the only state treasury portal that answers
-GitHub-hosted runners, so it runs on the pool. The others wait for an Indian vantage point (see [Other states](#other-states)).
+**Uttar Pradesh, [Koshvani](https://koshvani.up.nic.in)** runs on plain GitHub runners. **Maharashtra,
+[BEAMS](https://beams.mahakosh.gov.in)** answers only from India, so its projects run with `proxy="IN"`: each pool worker borrows
+one of the hub's Mumbai proxies. See [Maharashtra](#maharashtra-beams) and [Other states](#other-states).
 
 ## What is scraped
 
@@ -66,18 +67,38 @@ scrape-check --project treasury-up-grants --items 2         # setup + task again
   for the current year.
 - The **check** workflow runs the tests and `scrape-check` on 2 live grant items on every push.
 
+## Maharashtra (BEAMS)
+
+`beams.py` (task `beams`) reads BEAMS's public MIS reports (server-rendered JSP pages, no login).
+
+| Project | Queue item | Drill path on the site | Records |
+|---|---|---|---|
+| `treasury-mh-dept` | one department × year, 33 × 5 | Department-wise expenditure → demand → major head → scheme → detail head | `dept:`, `demand:`, `mh:`, `scheme:`, `head:` |
+| `treasury-mh-ddo` | one district × year, 36 × 5 | District-wise (DDO wise) → treasury → DDO | `dist:`, `tr:`, `ddo:` |
+
+- Department reports run up to a month: March for past years, the last complete month for the current one (`month0` in the
+  payload, 0-based). Columns: budget (and supplementary S1-S3, re-appropriations at the lower levels), releases, the month's and
+  April-to-month (`prog_`) received / distributed / expenditure / slips, % released and % of budget.
+- **Units differ by level**, as the site shows them: department and demand in rupees crore, major head and below in thousands
+  (`released_fd_crore` on major heads is in crore). Every record carries `unit`.
+- DDO reports show the current calendar month and April-to-date as of the day they are read; the current year's record ids carry the
+  scrape month (`ddo:2026-2027@2026-11/4501004479`). Amounts in crore. A treasury's `prog_balance` does not match the sum of its
+  DDOs (the site repeats the month's balance there); the other columns add up.
+- The columns are read from each table's header row (the group row's colspans are wrong on some pages). Parsed rows match the
+  page's own total row.
+- From a team box: `myproxy run python beams.py --local dept 2026-2027 A` (about 170 requests, 2 minutes) or
+  `--local ddo 2026-2027 45` (one district, about 12 requests). `myproxy run scrape-check --project treasury-mh-ddo --items 2`.
+  The **check** workflow can't reach BEAMS (no proxy there), so it checks Koshvani only.
+- Not used: the "DDO wise Expenditure" report (`AGExpMain.jsp`) returns zeros for every DDO tried.
+
 ## Other states
 
-Tested on 2026-10-28 from GitHub runners (US), from check-host.net nodes (US, DE, SG) and from the team server (FR):
+Checked on 2026-11-01 through the hub's Mumbai proxies (earlier, 2026-10-28/29, from GitHub runners, the team server and a Delhi VPS):
 
 | State | Portal | Host | Result |
 |---|---|---|---|
-| Uttar Pradesh | Koshvani | koshvani.up.nic.in | answers GitHub runners (not the team server) |
-| Maharashtra | BEAMS | beams.mahakosh.gov.in | TCP timeout everywhere |
-| Rajasthan | IFMS | ifms.rajasthan.gov.in | unreachable |
-| Bihar | CTMIS | ctmis.bihar.gov.in | TCP timeout everywhere |
-| Karnataka | Khajane-II | karnatakatreasury.gov.in (khajane2.* do not resolve) | TCP timeout everywhere |
-
-The next step is to check these from an Indian server. If they only answer Indian addresses, they can't run on GitHub-hosted
-runners. They would need a worker on an Indian machine (same `HubClient` contract) or a self-hosted runner there. Each state will
-get its own task script and `treasury-<state>-*` projects here.
+| Uttar Pradesh | Koshvani | koshvani.up.nic.in | answers GitHub runners (not the team server): scraped |
+| Maharashtra | BEAMS | beams.mahakosh.gov.in | answers from India only: scraped through the proxies |
+| Rajasthan | IFMS | ifms.rajasthan.gov.in | answers from India only: next |
+| Bihar | CTMIS | ctmis.bihar.gov.in | TCP timeout, from India too |
+| Karnataka | Khajane-II | karnatakatreasury.gov.in | no answer from India either; k2.karnataka.gov.in is the challan portal, not spending |
